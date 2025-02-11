@@ -50,14 +50,15 @@ echo "🚀 Activating virtual environment..."
 
 # Install Flask and Gunicorn in the virtual environment
 echo "📦 Installing Flask and Gunicorn..."
-pip install Flask gunicorn requests
+pip install Flask gunicorn requests concurrent.futures gevent 
 echo "✅ Flask and Gunicorn installed!"
 
 # Create Gunicorn configuration file (optional but good practice)
 echo "🛠️ Creating Gunicorn configuration file..."
 cat <<EOF > gunicorn_config.py
 bind = "0.0.0.0:5000"
-workers = 4
+workers = 10
+worker_class = "gevent"
 EOF
 echo "✅ Gunicorn configuration file created!"
 
