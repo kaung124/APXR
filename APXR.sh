@@ -26,7 +26,6 @@ fi
 # Upgrade pip and install virtualenv
 echo "⬆️ Upgrading pip and installing virtualenv..."
 pip install --upgrade pip
-pip install virtualenv
 echo "✅ pip and virtualenv installed!"
 
 # Navigate to the directory where app.py is located
@@ -35,22 +34,16 @@ echo "📁 Navigating to application directory: $APP_DIR"
 cd "$APP_DIR" || { echo "❌ Directory $APP_DIR not found! Exiting."; exit 1; }
 echo "✅ Successfully navigated to $APP_DIR"
 
-# Create and activate a virtual environment
-echo "🔒 Checking for existing virtual environment..."
-if [ ! -d "venv" ]; then
-    echo "❌ Virtual environment not found! Creating a new one..."
-    python -m venv venv
-    echo "✅ Virtual environment created!"
-else
-    echo "✅ Virtual environment already exists!"
-fi
-
 echo "🚀 Activating virtual environment..."
 # Ensure you're using bash or replace source with .
 
 # Install Flask and Gunicorn in the virtual environment
 echo "📦 Installing Flask and Gunicorn..."
-pip install Flask gunicorn requests concurrent.futures gevent 
+pip install Flask
+pip install requests
+pip install gunicorn 
+pip install concurrent.futures 
+pip install gevent 
 echo "✅ Flask and Gunicorn installed!"
 
 # Create Gunicorn configuration file (optional but good practice)
@@ -75,5 +68,5 @@ fi
 
 # Run the Flask app using Gunicorn with debug logs
 echo "🚀 Starting the Flask app with Gunicorn in Debug mode..."
-export FLASK_ENV=development
+
 gunicorn --log-level debug -c gunicorn_config.py loader:app
